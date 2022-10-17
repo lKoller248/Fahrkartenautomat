@@ -27,7 +27,7 @@ class Fahrkartenautomat {
             System.out.print("Anzahl der Tickets: ");
             anzTickets = tastatur.nextInt();
             if(anzTickets > 10 || anzTickets < 1){
-                System.out.println(" >> Wählen Sie bitte eine Anzahl von 1 bis 10 Tickets aus. <<");
+                System.out.println(" >> Waehlen Sie bitte eine Anzahl von 1 bis 10 Tickets aus. <<");
             }
         }while (anzTickets > 10 || anzTickets < 1);
 
@@ -39,7 +39,7 @@ class Fahrkartenautomat {
         while (eingezahlterGesamtbetrag < zuZahlenderBetrag) {
             zuZahlen = BigDecimal.valueOf(zuZahlenderBetrag).subtract(BigDecimal.valueOf(eingezahlterGesamtbetrag));
             System.out.printf("Noch zu zahlen: %.2f Euro\n", zuZahlen);
-            System.out.print("Eingabe (mind. 5 Cent, höchstens 20 Euro): ");
+            System.out.print("Eingabe (mind. 5 Cent, hoechstens 20 Euro): ");
             gueltig = false;
             eingeworfeneMuenze = tastatur.nextDouble();
             for(int i = 0; i < Zahlungsmittel.length; i++){
@@ -50,7 +50,7 @@ class Fahrkartenautomat {
             if(gueltig){
                 eingezahlterGesamtbetrag = eingezahlterGesamtbetrag + eingeworfeneMuenze;
             }else{
-                System.out.println(">> Kein gültiges Zahlungsmittel.");
+                System.out.println(">> Kein gueltiges Zahlungsmittel.");
             }
 
         }
@@ -74,8 +74,8 @@ class Fahrkartenautomat {
         BigDecimal rueckgabe = gesamt.subtract(BigDecimal.valueOf(zuZahlenderBetrag));
 
         if (rueckgabe.compareTo(BigDecimal.valueOf(0)) > 0) {
-            System.out.printf("Der Rückgabebetrag in Höhe von %.2f Euro\n", rueckgabe);
-            System.out.println("wird in folgenden Münzen ausgezahlt:");
+            System.out.printf("Der Rueckgabebetrag in Hoehe von %.2f Euro\n", rueckgabe);
+            System.out.println("wird in folgenden Muenzen ausgezahlt:");
 
             while (rueckgabe.compareTo(BigDecimal.valueOf(2.0)) >= 0) { // 2-Euro-Münzen
                 System.out.println("2 Euro");
