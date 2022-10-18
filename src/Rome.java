@@ -43,8 +43,11 @@ public class Rome {
         if(number.contains("CCD") || number.contains("CCM")){
             return false;
         }
-        if(!number.matches("[M,D,C,L,X,V,I]")){
-            return false;
+        char[] a = number.toCharArray();
+        for(int i = 0; i < a.length; i++){
+            if(a[i] != 'M' && a[i] != 'D' && a[i] != 'C' && a[i] != 'L' && a[i] != 'X' && a[i] != 'V' && a[i] != 'I'){
+                return false;
+            }
         }
         return true;
     }

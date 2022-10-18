@@ -51,7 +51,6 @@ class Fahrkartenautomat {
             }else{
                 System.out.println(">> Kein gueltiges Zahlungsmittel.");
             }
-
         }
 
         BigDecimal gesamt = new BigDecimal(eingezahlterGesamtbetrag);
