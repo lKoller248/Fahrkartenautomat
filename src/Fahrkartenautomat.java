@@ -1,4 +1,6 @@
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Scanner;
 
 class Fahrkartenautomat {
@@ -70,6 +72,8 @@ class Fahrkartenautomat {
 
         // 4    Rückgeldberechnung und -ausgabe
         BigDecimal rueckgabe = gesamt.subtract(BigDecimal.valueOf(zuZahlenderBetrag));
+        MathContext m = new MathContext(2);
+        rueckgabe = rueckgabe.round(m);
 
         if (rueckgabe.compareTo(BigDecimal.valueOf(0)) > 0) {
             System.out.printf("Der Rueckgabebetrag in Hoehe von %.2f Euro\n", rueckgabe);
