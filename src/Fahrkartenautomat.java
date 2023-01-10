@@ -24,6 +24,9 @@ class Fahrkartenautomat {
             System.out.println("Fehlerhafte Eingabe - Ticketpreis wird auf 1 gesetzt.");
         }
 
+        System.out.println("Fahrkartenbestellvorgang:");
+        System.out.println("=========================\n");
+
         do{
             System.out.print("Anzahl der Tickets: ");
             anzTickets = tastatur.nextInt();

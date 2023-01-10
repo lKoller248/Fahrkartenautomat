@@ -43,6 +43,12 @@ public class Rome {
         if(number.contains("CCD") || number.contains("CCM")){
             return false;
         }
+        if(number.contains("IXI") || number.contains("IVI") || number.contains("CDC") || number.contains("CMC") || number.contains("XDX") || number.contains("XMX")){
+            return false;
+        }
+        if(number.contains("VX") || number.contains("LC") || number.contains("DM")){
+            return false;
+        }
         char[] a = number.toCharArray();
         for(int i = 0; i < a.length; i++){
             if(a[i] != 'M' && a[i] != 'D' && a[i] != 'C' && a[i] != 'L' && a[i] != 'X' && a[i] != 'V' && a[i] != 'I'){
