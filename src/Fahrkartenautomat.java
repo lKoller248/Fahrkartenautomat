@@ -1,6 +1,5 @@
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.Scanner;
 
 class Fahrkartenautomat {
@@ -15,17 +14,45 @@ class Fahrkartenautomat {
         double eingezahlterGesamtbetrag;
         double eingeworfeneMuenze;
         int anzTickets;
-
-        // 1    Geldbetrag eingeben
-        System.out.print("Ticketpreis(Euro): ");
-        zuZahlenderBetrag = tastatur.nextDouble();
-        if(zuZahlenderBetrag <= 0){
-            zuZahlenderBetrag = 1;
-            System.out.println("Fehlerhafte Eingabe - Ticketpreis wird auf 1 gesetzt.");
-        }
+        int ticket;
+        double ticketPrice = 0;
 
         System.out.println("Fahrkartenbestellvorgang:");
         System.out.println("=========================\n");
+
+        System.out.println("Wählen Sie ihre Wunschkarte für Berlin AB aus:");
+        System.out.println("  Kurzstrecke AB [2,00 EUR] (1)");
+        System.out.println("  Einzelfahrschein AB [3,00 EUR] (2)");
+        System.out.println("  Tageskarte AB [8,80 EUR] (3)");
+        System.out.println("  4-Fahrten-Karte AB [9,40 EUR] (4)");
+        System.out.println();
+
+        boolean x = true;
+        do{
+            System.out.print("Ihre Wahl: ");
+            ticket = tastatur.nextInt();
+            switch(ticket){
+                case 1:
+                    ticketPrice = 2.00;
+                    x = false;
+                    break;
+                case 2:
+                    ticketPrice = 3.00;
+                    x = false;
+                    break;
+                case 3:
+                    ticketPrice = 8.80;
+                    x = false;
+                    break;
+                case 4:
+                    ticketPrice = 9.40;
+                    x = false;
+                    break;
+                default:
+                    System.out.println("  >> Falsche Eingabe <<");
+                    break;
+            }
+        }while(x);
 
         do{
             System.out.print("Anzahl der Tickets: ");
@@ -35,7 +62,7 @@ class Fahrkartenautomat {
             }
         }while (anzTickets > 10 || anzTickets < 1);
 
-        zuZahlenderBetrag *= anzTickets;
+        zuZahlenderBetrag = anzTickets * ticketPrice;
 
         // 2    Geldeinwurf
         eingezahlterGesamtbetrag = 0.0;

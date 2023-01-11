@@ -50,12 +50,7 @@ public class Matrix {
     }
 
     public static int CheckSum(int z){
-        String num = Integer.toString(z);
-        int check = 0;
-        for(int i = 0; i < num.length(); i++){
-            check += Integer.parseInt(String.valueOf(num.charAt(i)));
-        }
-        return check;
+        return z / 10 + z % 10;
     }
 
     public static boolean TryParse(String input){
