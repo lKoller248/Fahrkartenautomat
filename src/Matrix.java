@@ -42,17 +42,6 @@ public class Matrix {
     public static boolean ContainsNumber(int z, int c){
         if(Integer.toString(c).contains(Integer.toString(z))) return true;
         return false;
-
-        /* unnötig, funktioniert aber
-        char[] number = Integer.toString(z).toCharArray();
-        char[] check = Integer.toString(c).toCharArray();
-        for(int i = 0; i < number.length; i++){
-            for(int j = 0; j < check.length; j++){
-                if(number[i] == check[j]) return true;
-            }
-        }
-        return false;
-        */
     }
 
     public static boolean CheckSumEqual(int z, int c){
