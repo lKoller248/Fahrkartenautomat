@@ -5,26 +5,39 @@ import java.util.Scanner;
 class Fahrkartenautomat {
     public static void main(String[] args) {
 
-        // Variablen Deklaration
-        double[] Zahlungsmittel = {0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20};
-        boolean gueltig = false;
-
         Scanner tastatur = new Scanner(System.in);
 
         double zuZahlenderBetrag = 0;
-        double eingezahlterGesamtbetrag;
-        double eingeworfeneMuenze;
+
+        Begruessung();
+
+        zuZahlenderBetrag = FahrkertenbestellungErfassen(tastatur);
+
+        BigDecimal gesamt = new BigDecimal(FahrkartenBezahlen(tastatur, zuZahlenderBetrag));
+
+        FahrkartenAusgeben();
+
+        RueckgeldAusgeben(zuZahlenderBetrag, gesamt);
+
+        tastatur.close();
+    }
+
+    public static void Begruessung(){
+        System.out.println("Herzlich Willkommen!\n");
+    }
+
+    public static double FahrkertenbestellungErfassen(Scanner tastatur){
 
         int anzTickets;
         int ticket;
         double ticketPrice = 0;
         boolean bezahlen = false;
 
+        double zuZahlenderBetrag = 0;
 
         System.out.println("Fahrkartenbestellvorgang:");
         System.out.println("=========================\n");
 
-        // Ticketwahl
         System.out.println("Wählen Sie ihre Wunschkarte für Berlin AB aus:");
 
         while(!bezahlen){
@@ -66,7 +79,6 @@ class Fahrkartenautomat {
                 }
             }while(x);
 
-            // Anzahl Ticket Wahl
             if(!bezahlen){
                 do{
                     System.out.print("Anzahl der Tickets: ");
@@ -84,7 +96,16 @@ class Fahrkartenautomat {
             }
         }
 
-        // 2    Geldeinwurf
+        return zuZahlenderBetrag;
+    }
+
+    public static double FahrkartenBezahlen(Scanner tastatur, double zuZahlenderBetrag){
+
+        double[] Zahlungsmittel = {0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20};
+        boolean gueltig = false;
+        double eingezahlterGesamtbetrag;
+        double eingeworfeneMuenze;
+
         eingezahlterGesamtbetrag = 0.0;
         BigDecimal zuZahlen = new BigDecimal(zuZahlenderBetrag);
 
@@ -106,24 +127,26 @@ class Fahrkartenautomat {
                 System.out.println(">> Kein gueltiges Zahlungsmittel.");
             }
         }
+        return eingezahlterGesamtbetrag;
+    }
 
-        BigDecimal gesamt = new BigDecimal(eingezahlterGesamtbetrag);
-
-        // 3    Fahrscheinausgabe
+    public static void FahrkartenAusgeben(){
         System.out.println("\nFahrschein wird ausgegeben");
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 26; i++) {
             System.out.print("=");
             try {
-                Thread.sleep(200);
+                Thread.sleep(150);
             }
             catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
         System.out.println("\n\n");
+    }
 
-        // 4    Rückgeldberechnung und -ausgabe
-        BigDecimal rueckgabe = gesamt.subtract(BigDecimal.valueOf(zuZahlenderBetrag));
+    public static void RueckgeldAusgeben(double zuZahlenderBetrag, BigDecimal eingezahlterGesamtbetrag){
+
+        BigDecimal rueckgabe = eingezahlterGesamtbetrag.subtract(BigDecimal.valueOf(zuZahlenderBetrag));
         MathContext m = new MathContext(2);
         rueckgabe = rueckgabe.round(m);
 
@@ -131,35 +154,23 @@ class Fahrkartenautomat {
             System.out.printf("Der Rueckgabebetrag in Hoehe von %.2f Euro\n", rueckgabe);
             System.out.println("wird in folgenden Muenzen ausgezahlt:");
 
-            while (rueckgabe.compareTo(BigDecimal.valueOf(2.0)) >= 0) { // 2-Euro-Münzen
-                System.out.println("2 Euro");
-                rueckgabe = rueckgabe.subtract(BigDecimal.valueOf(2.0));
-            }
-            while (rueckgabe.compareTo(BigDecimal.valueOf(1.0)) >= 0) { // 1-Euro-Münzen
-                System.out.println("1 Euro");
-                rueckgabe = rueckgabe.subtract(BigDecimal.valueOf(1.0));
-            }
-            while (rueckgabe.compareTo(BigDecimal.valueOf(0.5)) >= 0) { // 50-Cent-Münzen
-                System.out.println("50 Cent");
-                rueckgabe = rueckgabe.subtract(BigDecimal.valueOf(0.5));
-            }
-            while (rueckgabe.compareTo(BigDecimal.valueOf(0.2)) >= 0) { // 20-Cent-Münzen
-                System.out.println("20 Cent");
-                rueckgabe = rueckgabe.subtract(BigDecimal.valueOf(0.2));
-            }
-            while (rueckgabe.compareTo(BigDecimal.valueOf(0.1)) >= 0) { // 10-Cent-Münzen
-                System.out.println("10 Cent");
-                rueckgabe = rueckgabe.subtract(BigDecimal.valueOf(0.1));
-            }
-            while (rueckgabe.compareTo(BigDecimal.valueOf(0.05)) >= 0) { // 5-Cent-Münzen
-                System.out.println("5 Cent");
-                rueckgabe = rueckgabe.subtract(BigDecimal.valueOf(0.05));
-            }
+            rueckgabe = MuenzRueckgabe(rueckgabe, 2.0, "2 Euro");
+            rueckgabe = MuenzRueckgabe(rueckgabe, 1.0, "1 Euro");
+            rueckgabe = MuenzRueckgabe(rueckgabe, 0.5, "50 Cent");
+            rueckgabe = MuenzRueckgabe(rueckgabe, 0.2, "20 Cent");
+            rueckgabe = MuenzRueckgabe(rueckgabe, 0.1, "10 Cent");
+            MuenzRueckgabe(rueckgabe, 0.05, "5 Cent");
         }
 
         System.out.println("\nVergessen Sie nicht, den Fahrschein\n" + "vor Fahrtantritt entwerten zu lassen!\n"
                 + "Wir wuenschen Ihnen eine gute Fahrt.");
+    }
 
-        tastatur.close();
+    public static BigDecimal MuenzRueckgabe(BigDecimal rueckgabe, double value, String ausgabe){
+        while (rueckgabe.compareTo(BigDecimal.valueOf(value)) >= 0) {
+            System.out.println(ausgabe);
+            rueckgabe = rueckgabe.subtract(BigDecimal.valueOf(value));
+        }
+        return rueckgabe;
     }
 }
