@@ -28,6 +28,9 @@ class Fahrkartenautomat {
 
     public static double FahrkertenbestellungErfassen(Scanner tastatur){
 
+        double[] prices = {3.0, 3.5, 3.8, 2.0, 8.6, 9.2, 10.0, 9.4, 12.6, 13.8, 25.5, 26.0, 26.5};
+        String[] tickets = {"Einzelfahrschein AB","Einzelfahrschein BC","Einzelfahrschein ABC","Kurzstrecke AB","Tageskarte AB","Tageskarte BC","Tageskarte ABC","4-Fahrten-Karte AB","4-Fahrten-Karte BC","4-Fahrten-Karte ABC","Kleingruppen-Tageskarte AB","Kleingruppen-Tageskarte BC","Kleingruppen-Tageskarte ABC"};
+
         int anzTickets;
         int ticket;
         double ticketPrice = 0;
@@ -38,14 +41,13 @@ class Fahrkartenautomat {
         System.out.println("Fahrkartenbestellvorgang:");
         System.out.println("=========================\n");
 
-        System.out.println("Wählen Sie ihre Wunschkarte für Berlin AB aus:");
+        System.out.println("Wählen Sie ihre Wunschfahrkarte aus:");
 
         while(!bezahlen){
-            System.out.println("  Kurzstrecke AB [2,00 EUR] (1)");
-            System.out.println("  Einzelfahrschein AB [3,00 EUR] (2)");
-            System.out.println("  Tageskarte AB [8,80 EUR] (3)");
-            System.out.println("  4-Fahrten-Karte AB [9,40 EUR] (4)");
-            System.out.println("  Bezahlen (9)");
+            for(int i = 0; i < tickets.length; i++){
+                System.out.printf("  " + tickets[i] + " [%.2f€] (" + (i + 1) + ")\n", prices[i]);
+            }
+            System.out.println("  Bezahlen (0)");
             System.out.println();
 
             boolean x = true;
@@ -53,29 +55,19 @@ class Fahrkartenautomat {
                 System.out.print("Ihre Wahl: ");
                 ticket = tastatur.nextInt();
                 switch(ticket){
-                    case 1:
-                        ticketPrice = 2.00;
-                        x = false;
-                        break;
-                    case 2:
-                        ticketPrice = 3.00;
-                        x = false;
-                        break;
-                    case 3:
-                        ticketPrice = 8.80;
-                        x = false;
-                        break;
-                    case 4:
-                        ticketPrice = 9.40;
-                        x = false;
-                        break;
-                    case 9:
+                    case 0:
                         bezahlen = true;
                         x = false;
                         break;
                     default:
-                        System.out.println("  >> Falsche Eingabe <<");
-                        break;
+                        if(ticket > tickets.length){
+                            System.out.println("  >> Falsche Eingabe <<");
+                            break;
+                        }else{
+                            ticketPrice = prices[ticket - 1];
+                            x = false;
+                            break;
+                        }
                 }
             }while(x);
 
